@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section Board - Staff Assignment</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SortableJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #f1f5f9;
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+
+        .section-card {
+            background: rgba(51, 65, 85, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .section-card:hover {
+            background: rgba(51, 65, 85, 0.8);
+            border-color: rgba(14, 165, 233, 0.5);
+        }
+
+        .staff-card {
+            cursor: grab;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .staff-card:active {
+            cursor: grabbing;
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Dragging styles from SortableJS */
+        .sortable-ghost {
+            opacity: 0.4;
+            background: #cbd5e1;
+        }
+
+        .sortable-drag {
+            opacity: 1;
+            transform: scale(1.05);
+            z-index: 50;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col h-screen overflow-hidden text-sm">
+
+    <!-- Header -->
+    <header class="h-14 glass-panel flex items-center justify-between px-6 z-20 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div
+                class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-400">
+                Section Board
+            </h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span id="currentTime" class="font-mono text-slate-400">00:00</span>
+            <button onclick="resetBoard()"
+                class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition"
+                title="Reset All">
+                <i class="fa-solid fa-rotate-right text-slate-400 hover:text-white"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="flex flex-1 overflow-hidden relative">
+
+        <!-- Sidebar: Staff Pool -->
+        <aside class="w-64 glass-panel border-r border-white/10 flex flex-col z-10">
+            <div class="p-4 border-b border-white/5 bg-white/5">
+                <h2 class="font-semibold text-slate-300 flex justify-between items-center">
+                    <span>Staff Pool</span>
+                    <span id="staffCount"
+                        class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded-full">0</span>
+                </h2>
+            </div>
+
+            <div id="staffPool" class="flex-1 overflow-y-auto p-3 space-y-2">
+                <!-- Staff cards will be injected here -->
+            </div>
+
+            <!-- Add Staff Input -->
+            <div class="p-3 border-t border-white/10 bg-black/20">
+                <form id="addStaffForm" class="flex gap-2">
+                    <input type="text" id="newStaffName" placeholder="New Staff..."
+                        class="bg-slate-800 border border-slate-600 rounded px-3 py-1.5 w-full text-xs focus:outline-none focus:border-brand-500 text-white placeholder-slate-500">
+                    <button type="submit"
+                        class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-1.5 rounded transition shadow-lg shadow-brand-500/20">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Area: Sections Grid -->
+        <main class="flex-1 overflow-y-auto p-6 relative">
+
+            <!-- Background Decoration -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl"></div>
+            </div>
+
+            <div id="sectionsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-20">
+                <!-- Sections will be injected here -->
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Initialization & Logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>

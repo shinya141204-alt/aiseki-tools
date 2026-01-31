@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.py
+.env
+*.log
+
+# macOS
+.DS_Store
+
+# Secrets
+*_cookie.txt
+
+# Data files (not needed for GitHub Pages)
+visit_data_*.html
+visit_data_files/
+*.pdf
+neoorder_products.csv
+相席モニター

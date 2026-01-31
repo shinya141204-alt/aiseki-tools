@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相席業務改善ツール</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .tool-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .tool-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🏢 相席業務改善ツール</h1>
+
+    <div class="tools">
+        <a href="order-manager/" class="tool-card">
+            <div class="tool-icon">📦</div>
+            <div class="tool-name">かんたん発注</div>
+            <div class="tool-desc">在庫チェックと発注数量の管理</div>
+        </a>
+
+        <a href="shift-optimizer/" class="tool-card">
+            <div class="tool-icon">📅</div>
+            <div class="tool-name">シフト最適化</div>
+            <div class="tool-desc">シフトと給与計算の最適化</div>
+        </a>
+
+        <a href="section-board/" class="tool-card">
+            <div class="tool-icon">📋</div>
+            <div class="tool-name">セクションボード</div>
+            <div class="tool-desc">業務エリアの管理</div>
+        </a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かんたん発注 - 在庫チェック</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📦 かんたん発注</h1>
+            <div class="header-actions">
+                <button id="showHiddenBtn" class="btn btn-secondary">
+                    非表示を見る
+                </button>
+                <button id="resetCurrentBtn" class="btn btn-secondary">
+                    現在庫をクリア
+                </button>
+                <button id="exportBtn" class="btn btn-primary">
+                    📥 発注リストを保存
+                </button>
+            </div>
+        </header>
+
+        <!-- How to use -->
+        <div class="how-to-use">
+            <h2>使い方</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <div class="step-content">
+                        <strong>いつもの数</strong>を入力
+                        <span class="step-hint">→ お店にあるべき数</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <div class="step-content">
+                        <strong>今ある数</strong>を入力
+                        <span class="step-hint">→ 今お店にある数</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <div class="step-content">
+                        <strong>注文する数</strong>が自動で出ます
+                        <span class="step-hint">→ 足りない分だけ表示</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary">
+            <div class="summary-card">
+                <span class="summary-num" id="orderCount">0</span>
+                <span class="summary-label">注文する品目</span>
+            </div>
+            <div class="summary-card highlight">
+                <span class="summary-num" id="totalOrderQty">0</span>
+                <span class="summary-label">注文の合計数</span>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-area">
+            <input type="text" id="searchInput" placeholder="🔍 商品を探す（名前やコードで検索）">
+            <label class="filter-check">
+                <input type="checkbox" id="showOnlyOrders">
+                注文がある商品だけ見る
+            </label>
+        </div>
+
+        <!-- Product Table -->
+        <div class="table-container">
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th class="col-name">商品名</th>
+                        <th class="col-price">値段</th>
+                        <th class="col-qty">いつもの数</th>
+                        <th class="col-qty current">今ある数</th>
+                        <th class="col-order">注文する数</th>
+                        <th class="col-action">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- ここに商品が入ります -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Order List -->
+        <div class="order-section">
+            <h2>📋 注文リスト</h2>
+            <p class="order-hint">※ 注文する数がある商品だけ表示されます</p>
+            <div class="order-list" id="orderList">
+                <!-- ここに注文リストが入ります -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Products Modal -->
+    <div id="hiddenModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>非表示の商品</h3>
+                <button id="closeModalBtn" class="modal-close">✕</button>
+            </div>
+            <div class="modal-body" id="hiddenList">
+                <!-- Hidden products list -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

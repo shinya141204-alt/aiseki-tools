@@ -26,7 +26,10 @@
                     <i class="fa-solid fa-martini-glass-citrus"></i> 計算
                 </button>
                 <button class="tab-btn" data-tab="ingredients">
-                    <i class="fa-solid fa-boxes-stacked"></i> 材料管理
+                    <i class="fa-solid fa-boxes-stacked"></i> 登録材料
+                </button>
+                <button class="tab-btn" data-tab="catalog">
+                    <i class="fa-solid fa-truck"></i> 発注カタログ
                 </button>
             </div>
 
@@ -98,6 +101,7 @@
                                     <option value="ml">ml</option>
                                     <option value="g">g</option>
                                     <option value="個">個</option>
+                                    <option value="枚">枚</option>
                                 </select>
                             </div>
                         </div>
@@ -113,6 +117,21 @@
                     </div>
                     <ul id="ingredients-list" class="item-list">
                         <!-- List items will be injected here -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Catalog Section (NeoOrder Products) -->
+            <section id="catalog" class="tab-content">
+                <div class="card">
+                    <h2><i class="fa-solid fa-truck"></i> 発注カタログ</h2>
+                    <p class="description">NeoOrderの商品から材料を追加できます</p>
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="catalog-search" placeholder="商品を検索...">
+                    </div>
+                    <ul id="catalog-list" class="item-list catalog-list">
+                        <!-- Catalog items will be injected here -->
                     </ul>
                 </div>
             </section>
